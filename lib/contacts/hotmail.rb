@@ -62,12 +62,7 @@ class Contacts
         url = URI.parse(contact_list_url)
         data, resp, cookies, forward = get(get_contact_list_url, @cookies )
         
-        @contacts = CSV.parse(data)[1..-1].map{|x| [x[1],x[3],x[79]]}.reject{|x| x[-1].blank?}.map do |row|
-          # row is a triplet of first name, last namd and email address. Name is removed for unicode compliance. 
-          # name = (row[0] || "") + " " + (row[1] || "")
-          # name = row[2] if name == " "
-          [row[2], row[2]]
-        end
+        @contacts = CSV.parse(data)[1..-1].map{|x| x[46]}.compact.map{|e| [e,e]}
       else
         @contacts || []
       end
