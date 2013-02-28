@@ -62,7 +62,7 @@ class Contacts
       if @contacts.nil? && connected?
         url = URI.parse(contact_list_url)
         data, resp, cookies, forward = get(get_contact_list_url, @cookies )
-        data = Iconv.iconv("utf-8","utf-16",data).join
+        data = Iconv.conv('UTF-8//IGNORE', 'UTF-8', data + ' ')[0..-2]
 
         @contacts = CSV.parse(data)[1..-1].map{|x| x[46]}.compact.map{|e| [e,e]}
       else
